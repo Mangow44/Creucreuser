@@ -9,7 +9,7 @@ module.exports = {
         'taupe': '#BFADA3',
         'creme': '#D9C6BA',
         'blanc': '#F2F2F2'
-      },
+      }
     },
   },
   plugins: [],

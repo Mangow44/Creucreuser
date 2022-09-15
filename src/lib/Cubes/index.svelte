@@ -4,6 +4,10 @@
 
 	let htmlCube;
 
+	// todo 0 = world + trier par métier
+	let cube = getCube(cubes[0]);
+	$: cubeHealth = cube.health;
+
 	function getCube(array) {
 		let index = 0;
 		let rand = Math.floor(Math.random() * 100);
@@ -15,10 +19,6 @@
 
 		return array[index];
 	}
-
-	// todo 0 = world + trier par métier
-	let cube = getCube(cubes[0]);
-	$: cubeHealth = cube.health;
 
 	function breakCube() {
 		if (cube.tool == player.currentTool) {
@@ -38,7 +38,7 @@
 	}
 </script>
 
-<div class="mt-auto mx-auto w-[12rem] h-[14rem]">
+<div class="mt-auto mx-auto w-[12rem] h-[16rem]">
 	<img
 		bind:this={htmlCube}
 		src="/cubes/{cube.name}{cubeHealth}.png"
@@ -49,9 +49,9 @@
 		}}
 	/>
 	<p
-		class="w-full h-[2rem] 
+		class="flex justify-center items-center w-full h-[4rem] font-bold
 			overflow-hidden text-center text-ellipsis whitespace-nowrap"
 	>
-		{cube.name}
+		{cube.name.toUpperCase()}
 	</p>
 </div>
