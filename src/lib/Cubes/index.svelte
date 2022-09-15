@@ -2,6 +2,8 @@
 	export let cubes = [];
 	export let player = {};
 
+	let htmlCube;
+
 	function getCube(array) {
 		let index = 0;
 		let rand = Math.floor(Math.random() * 100);
@@ -21,23 +23,30 @@
 	function breakCube() {
 		if (cube.tool == player.currentTool) {
 			cubeHealth--;
+			breakingAnimation();
 			if (cubeHealth != 0) return;
 			player.coins += cube.reward;
 			cube = getCube(cubes[0]);
 		}
 	}
+
+	function breakingAnimation() {
+		htmlCube.classList.add('bouncing');
+		setTimeout(() => {
+			htmlCube.classList.remove('bouncing');
+		}, 100);
+	}
 </script>
 
-<div
-	class="mt-auto mx-auto w-[12rem] h-[14rem]"
-	on:click={() => {
-		breakCube();
-	}}
->
+<div class="mt-auto mx-auto w-[12rem] h-[14rem]">
 	<img
+		bind:this={htmlCube}
 		src="/cubes/{cube.name}{cubeHealth}.png"
 		alt={cube.name}
 		class="object-cover w-full h-[12em] shadow-2xl"
+		on:click={() => {
+			breakCube();
+		}}
 	/>
 	<p
 		class="w-full h-[2rem] 
