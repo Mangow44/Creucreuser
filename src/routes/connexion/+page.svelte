@@ -22,17 +22,30 @@
 </script>
 
 <div class="flex flex-col w-full h-screen bg-white">
-	<div>
-		<label for="email">Email</label>
-		<input type="email" name="userEmail" id="email" bind:value={email} />
+	<div class="w-[90%] mx-auto mt-20 shadow-xl rounded-lg">
+		<label for="email" class="font-bold text-sm">EMAIL :</label>
+		<input
+			type="email"
+			name="userEmail"
+			id="email"
+			bind:value={email}
+			class="border-2 border-dark rounded-lg w-full"
+		/>
 	</div>
 
-	<div>
-		<label for="password">Password</label>
-		<input type="password" name="userPassword" id="password" bind:value={password} />
+	<div class="w-[90%] mx-auto mt-10 shadow-xl rounded-lg">
+		<label for="password" class="font-bold text-sm">MOT DE PASSE :</label>
+		<input
+			type="password"
+			name="userPassword"
+			id="password"
+			bind:value={password}
+			class="border-2 border-dark rounded-lg w-full "
+		/>
 	</div>
 
 	<button
+		class="mx-auto font-bold mt-10 w-[40%] h-12 bg-taupe rounded-lg"
 		on:click={() => {
 			connexion();
 		}}
@@ -41,8 +54,11 @@
 	</button>
 
 	<button
+		class="underline mt-3"
 		on:click={() => {
 			goto('/inscription');
-		}}>Inscription</button
+		}}
 	>
+		Inscription
+	</button>
 </div>
