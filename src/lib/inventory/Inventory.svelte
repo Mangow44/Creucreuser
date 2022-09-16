@@ -8,19 +8,21 @@
 		? 'displayInventory'
 		: 'hideInventory'}"
 >
-	<div class="flex flex-wrap mt-auto w-full h-[90%] gap-1">
+	<div class="flex flex-wrap mt-auto w-full h-[90%] gap-1 overflow-auto">
 		{#each Object.entries(playerInventory) as [ressource, amount]}
-			<div class="relative m-auto w-[8rem] h-[11rem] object-cover">
-				<img src="/ressources/{ressource}.png" alt={ressource} class="w-[8rem] h-[8rem]" />
+			<div class="relative m-auto w-[4rem] h-[7rem] object-cover">
+				<img src="/ressources/{ressource}.png" alt={ressource} class="w-[4rem] h-[4rem]" />
 				<p
 					class="absolute flex justify-center items-center
-						rounded-full bg-blanc w-[3rem] h-[3rem] font-bold
-						right-[calc(50%-1.5rem)] bottom-[4rem] opacity-80
-						overflow-auto"
+						rounded-full bg-blanc w-[2rem] h-[2rem] font-bold
+						right-[calc(50%-1rem)] bottom-[3rem] opacity-80
+						text-xs overflow-auto"
 				>
 					{amount}
 				</p>
-				<p class="flex justify-center items-center w-[8rem] h-[3rem] font-bold overflow-auto">
+				<p
+					class="flex justify-center items-center w-[4rem] h-[3rem] font-bold text-xs overflow-auto"
+				>
 					{ressource.toUpperCase()}
 				</p>
 			</div>
