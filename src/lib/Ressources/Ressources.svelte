@@ -3,6 +3,7 @@
 
 	export let ressources = [];
 	export let player = {};
+	export let playerInventory = {};
 
 	// todo 0 = world
 	let cube = generateCube(ressources[0]);
@@ -13,14 +14,16 @@
 		let index = 0;
 		let rand = Math.floor(Math.random() * 250);
 
-		if (rand <= 150) index = 0;
-		if (rand > 150 && rand <= 245) index = 1;
-		if (rand > 245 && rand <= 249) index = 2;
+		if (rand <= 120) index = 0;
+		if (rand > 120 && rand <= 215) index = 1;
+		if (rand > 215 && rand <= 245) index = 2;
+		if (rand > 245 && rand <= 249) index = 3;
 
 		return array[index];
 	}
 
 	function breakCube() {
+		if (!player.currentTool) return;
 		if (
 			cube.toolFamily == player.currentTool.toolFamily &&
 			cube.toolLevel <= player.currentTool.toolLevel
@@ -28,6 +31,7 @@
 			cubeHealth = cubeHealth - player.currentTool.toolDamage;
 			breakingAnimation();
 			if (cubeHealth > 0) return;
+			addToInventory(cube.name);
 			cube = generateCube(ressources[0]);
 		}
 	}
@@ -37,6 +41,14 @@
 		setTimeout(() => {
 			htmlCube.classList.remove('bouncing');
 		}, 100);
+	}
+
+	function addToInventory(ressource) {
+		if (!playerInventory[ressource]) {
+			playerInventory[ressource] = 1;
+		} else {
+			playerInventory[ressource]++;
+		}
 	}
 </script>
 
