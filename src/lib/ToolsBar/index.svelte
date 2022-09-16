@@ -13,7 +13,11 @@
 				player.currentTool = tool;
 			}}
 		>
-			<img src="/tools/{tool}.png" alt={tool} class="object-cover w-full h-full" />
+			<img
+				src="/tools/{tool.toolName}.png"
+				alt={tool.toolName}
+				class="object-cover w-full h-full"
+			/>
 		</div>
 	{/each}
 </div>
