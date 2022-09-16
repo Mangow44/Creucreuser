@@ -1,6 +1,9 @@
 <script>
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { getAuth } from 'firebase/auth';
 	import { template } from '$lib/data/player';
-	import { inventory } from '$lib/data/inventory';
+	import { getInventory } from '$lib/data/inventory';
 	import { ressources } from '$lib/data/ressources';
 	import Coins from '$lib/Coins/index.svelte';
 	import InventoryButton from '$lib/inventory/InventoryButton.svelte';
@@ -9,13 +12,25 @@
 	import Inputs from '$lib/Inputs/index.svelte';
 
 	$: player = template;
-	let playerInventory = inventory;
+	let playerInventory;
+
+	onMount(() => {
+		if (!getAuth().currentUser) {
+			goto('/connexion');
+		} else {
+			getInventory(getAuth().currentUser?.uid).then((inv) => {
+				playerInventory = inv;
+			});
+		}
+	});
 </script>
 
-<div class="relative main flex flex-col w-full min-h-screen bg-blanc">
-	<Coins coins={player.coins} />
-	<InventoryButton bind:playerInventory />
-	<Ressources bind:player bind:playerInventory {ressources} />
-	<ToolsBar bind:player />
-	<Inputs bind:player />
-</div>
+{#await playerInventory then _}
+	<div class="relative main flex flex-col w-full min-h-screen bg-blanc">
+		<Coins coins={player.coins} />
+		<InventoryButton bind:playerInventory />
+		<Ressources bind:player bind:playerInventory {ressources} />
+		<ToolsBar bind:player />
+		<Inputs bind:player />
+	</div>
+{/await}

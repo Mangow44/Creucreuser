@@ -1,5 +1,8 @@
 <script>
 	import Inventory from './Inventory.svelte';
+	import { db } from '$lib/firebase/config';
+	import { doc, setDoc } from 'firebase/firestore';
+	import { getAuth } from 'firebase/auth';
 
 	export let playerInventory = {};
 	let htmlInventoryButton;
@@ -11,15 +14,22 @@
 			init = true;
 		} else {
 			animateInventory();
+			saveInventory();
 		}
 	}
 
-	let animateInventory = () => {
+	function animateInventory() {
 		htmlInventoryButton.classList.add('bouncing');
 		setTimeout(() => {
 			htmlInventoryButton.classList.remove('bouncing');
 		}, 100);
-	};
+	}
+
+	async function saveInventory() {
+		await setDoc(doc(db, 'inventory', getAuth().currentUser.uid), {
+			inventory: Object.assign({}, playerInventory)
+		});
+	}
 </script>
 
 <div
