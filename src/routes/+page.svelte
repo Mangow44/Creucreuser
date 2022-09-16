@@ -5,7 +5,7 @@
 	import Coins from '$lib/Coins/index.svelte';
 	import InventoryButton from '$lib/inventory/InventoryButton.svelte';
 	import ToolsBar from '$lib/ToolsBar/index.svelte';
-	import Ressources from '$lib/ressource/Ressources.svelte';
+	import Ressources from '$lib/ressources/Ressources.svelte';
 	import Inputs from '$lib/Inputs/index.svelte';
 
 	$: player = template;
