@@ -2,10 +2,10 @@ import { init } from '../serverless.js';
 
 export const handler = init({
 	appDir: "_app",
-	assets: new Set(["cubes/fer1.png","cubes/fer2.png","cubes/fer3.png","cubes/fer4.png","cubes/fer5.png","cubes/fossile1.png","cubes/fossile2.png","cubes/fossile3.png","cubes/pierre1.png","cubes/pierre2.png","cubes/terre1.png","favicon.png","tools/foreuse.png","tools/marteau.png","tools/pelle.png","tools/pioche.png"]),
+	assets: new Set(["favicon.png","logo/inventory.png","logo/inventory_cross.png","ressources/break1.png","ressources/break2.png","ressources/break3.png","ressources/fer.png","ressources/fossile.png","ressources/pierre.png","ressources/terre.png","tools/maillet&burin_en_pierre.png","tools/pelle_en_pierre.png","tools/pioche_en_pierre.png"]),
 	mimeTypes: {".png":"image/png"},
 	_: {
-		entry: {"file":"_app/immutable/start-e4abc67e.js","imports":["_app/immutable/start-e4abc67e.js","_app/immutable/chunks/index-a53d21d6.js","_app/immutable/chunks/singletons-64141d31.js"],"stylesheets":[]},
+		entry: {"file":"_app/immutable/start-93ff7418.js","imports":["_app/immutable/start-93ff7418.js","_app/immutable/chunks/index-8977694a.js","_app/immutable/chunks/singletons-f4418a10.js"],"stylesheets":[]},
 		nodes: [
 			() => import('../server/nodes/0.js'),
 			() => import('../server/nodes/1.js'),

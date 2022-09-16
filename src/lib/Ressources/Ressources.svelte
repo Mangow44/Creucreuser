@@ -1,5 +1,5 @@
 <script>
-	import Cube from '$lib/Ressources/Cube/index.svelte';
+	import Cube from '$lib/ressources/Cube/index.svelte';
 
 	export let ressources = [];
 	export let player = {};
