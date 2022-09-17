@@ -1,31 +1,17 @@
 <script>
+	import Item from './Item.svelte';
+
 	export let playerInventory = {};
 	export let displayInventory = false;
 </script>
 
 <div
-	class="flex w-full h-screen fixed bg-dark-taupe z-10 inventory {displayInventory
-		? 'displayInventory'
-		: 'hideInventory'}"
+	class="flex w-full h-screen fixed bg-dark-taupe z-10 inventory 
+			{displayInventory ? 'displayInventory' : 'hideInventory'}"
 >
-	<div class="flex flex-wrap mt-auto w-full h-[90%] gap-1 overflow-auto">
-		{#each Object.entries(playerInventory) as [ressource, amount]}
-			<div class="relative m-auto w-[4rem] h-[7rem] object-cover">
-				<img src="/ressources/{ressource}.png" alt={ressource} class="w-[4rem] h-[4rem]" />
-				<p
-					class="absolute flex justify-center items-center
-						rounded-full bg-blanc w-[2rem] h-[2rem] font-bold
-						right-[calc(50%-1rem)] bottom-[3rem] opacity-80
-						text-xs overflow-auto"
-				>
-					{amount}
-				</p>
-				<p
-					class="flex justify-center items-center w-[4rem] h-[3rem] font-bold text-xs overflow-auto"
-				>
-					{ressource.toUpperCase()}
-				</p>
-			</div>
+	<div class="mt-auto w-full h-[90%] overflow-auto">
+		{#each Object.entries(playerInventory) as [name, amount]}
+			<Item {name} {amount} />
 		{/each}
 	</div>
 </div>

@@ -13,7 +13,7 @@
 
 	$: player = template;
 	let playerInventory;
-
+	// session + refonte visuelle inscri conne + tri de l'inventaire par ordre alpha
 	onMount(() => {
 		if (!getAuth().currentUser) {
 			goto('/connexion');
