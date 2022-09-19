@@ -1,8 +1,18 @@
 <script>
+	import { rarity } from '$lib/data/rarity';
 	import Item from './Item.svelte';
 
 	export let playerInventory = {};
 	export let displayInventory = false;
+	let sortedInventory = [];
+
+	$: if (playerInventory) {
+		rarity.forEach((el) => {
+			if (playerInventory[el]) {
+				sortedInventory[el] = playerInventory[el];
+			}
+		});
+	}
 </script>
 
 <div
@@ -10,7 +20,7 @@
 			{displayInventory ? 'displayInventory' : 'hideInventory'}"
 >
 	<div class="mt-auto w-full h-[90%] overflow-auto">
-		{#each Object.entries(playerInventory) as [name, amount]}
+		{#each Object.entries(sortedInventory) as [name, amount]}
 			<Item {name} {amount} />
 		{/each}
 	</div>
