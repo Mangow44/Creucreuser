@@ -36,7 +36,7 @@
 		</p>
 		<div
 			class="absolute w-full h-full  bg-green-300 translate-ratio"
-			style="--ratio:calc({ratio}% - 100%);"
+			style="--ratio:calc({ratio || 0}% - 100%);"
 		/>
 	</div>
 
