@@ -1,14 +1,11 @@
-import { c as create_ssr_component, e as escape, d as each, f as add_attribute, v as validate_component } from "../../chunks/index.js";
+import { c as create_ssr_component, e as escape, d as add_attribute, f as each, v as validate_component } from "../../chunks/index.js";
+import "firebase/auth";
+import { d as db, a as auth } from "../../chunks/config.js";
+import { updateDoc, doc } from "firebase/firestore";
 const template = {
-  coins: 0,
-  tools: [
-    { toolFamily: "pelle", toolLevel: 1, toolName: "pelle_en_pierre", toolDamage: 1 },
-    { toolFamily: "pioche", toolLevel: 1, toolName: "pioche_en_pierre", toolDamage: 1 },
-    { toolFamily: "maillet&burin", toolLevel: 1, toolName: "maillet&burin_en_pierre", toolDamage: 1 }
-  ],
-  currentTool: null
+  currentTool: null,
+  inventory: {}
 };
-const inventory = {};
 const ressources = [
   [
     { toolFamily: "pelle", toolLevel: 1, health: 2, name: "terre" },
@@ -17,14 +14,23 @@ const ressources = [
     { toolFamily: "maillet&burin", toolLevel: 1, health: 20, name: "fossile" }
   ]
 ];
-const Coins = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let fixedCoins;
-  let { coins = 0 } = $$props;
-  if ($$props.coins === void 0 && $$bindings.coins && coins !== void 0)
-    $$bindings.coins(coins);
-  fixedCoins = coins.toFixed(4);
-  return `<div class="${"absolute right-5 top-5"}">${escape(fixedCoins)}\u20AC
-</div>`;
+const rarity = [
+  "terre",
+  "pierre",
+  "fer",
+  "fossile"
+];
+const Item = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let { amount = 0 } = $$props;
+  let { name = "" } = $$props;
+  if ($$props.amount === void 0 && $$bindings.amount && amount !== void 0)
+    $$bindings.amount(amount);
+  if ($$props.name === void 0 && $$bindings.name && name !== void 0)
+    $$bindings.name(name);
+  return `<div class="${"flex relative w-full h-[7rem] my-1 object-cover"}"><div><img src="${"/ressources/" + escape(name, true) + ".png"}"${add_attribute("alt", name, 0)} class="${"w-[4rem] h-[4rem] ml-2"}">
+		<p class="${"flex justify-center items-center w-[4rem] h-[2rem] ml-2 font-bold text-xs overflow-auto"}">${escape(name.toUpperCase())}</p></div>
+
+	<p class="${"flex justify-center items-center mx-auto mt-5 w-[70%] h-[2rem] rounded-full bg-blanc opacity-80 font-bold text-xs overflow-auto"}">${escape(amount)}</p></div>`;
 });
 const Inventory_svelte_svelte_type_style_lang = "";
 const css = {
@@ -32,58 +38,60 @@ const css = {
   map: null
 };
 const Inventory = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let { playerInventory = {} } = $$props;
+  let { playerRessources = {} } = $$props;
   let { displayInventory = false } = $$props;
-  if ($$props.playerInventory === void 0 && $$bindings.playerInventory && playerInventory !== void 0)
-    $$bindings.playerInventory(playerInventory);
+  let sortedInventory = [];
+  const sortInventory = () => {
+    sortedInventory = [];
+    rarity.forEach((el) => {
+      if (playerRessources[el]) {
+        sortedInventory[el] = playerRessources[el];
+      }
+    });
+  };
+  if ($$props.playerRessources === void 0 && $$bindings.playerRessources && playerRessources !== void 0)
+    $$bindings.playerRessources(playerRessources);
   if ($$props.displayInventory === void 0 && $$bindings.displayInventory && displayInventory !== void 0)
     $$bindings.displayInventory(displayInventory);
   $$result.css.add(css);
-  return `<div class="${"flex w-full h-screen fixed bg-dark-taupe z-10 inventory " + escape(displayInventory ? "displayInventory" : "hideInventory", true) + " svelte-1tkdetm"}"><div class="${"flex flex-wrap mt-auto w-full h-[90%] gap-1"}">${each(Object.entries(playerInventory), ([ressource, amount]) => {
-    return `<div class="${"relative m-auto w-[8rem] h-[11rem] object-cover"}"><img src="${"/ressources/" + escape(ressource, true) + ".png"}"${add_attribute("alt", ressource, 0)} class="${"w-[8rem] h-[8rem]"}">
-				<p class="${"absolute flex justify-center items-center rounded-full bg-blanc w-[3rem] h-[3rem] font-bold right-[calc(50%-1.5rem)] bottom-[4rem] opacity-80 overflow-auto"}">${escape(amount)}</p>
-				<p class="${"flex justify-center items-center w-[8rem] h-[3rem] font-bold overflow-auto"}">${escape(ressource.toUpperCase())}</p>
-			</div>`;
+  {
+    if (playerRessources) {
+      sortInventory();
+    }
+  }
+  return `<div class="${"flex w-full h-screen fixed bg-dark-taupe z-10 inventory " + escape(displayInventory ? "displayInventory" : "hideInventory", true) + " svelte-1tkdetm"}"><div class="${"mt-auto w-full h-[90%] overflow-auto"}">${each(Object.entries(sortedInventory), ([name, amount]) => {
+    return `${validate_component(Item, "Item").$$render($$result, { name, amount }, {}, {})}`;
   })}</div>
 </div>`;
 });
 const InventoryButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let { playerInventory = {} } = $$props;
+  let { playerRessources = {} } = $$props;
   let htmlInventoryButton;
   let displayInventory = false;
-  let init = false;
-  let animateInventory = () => {
-    htmlInventoryButton.classList.add("bouncing");
-    setTimeout(
-      () => {
-        htmlInventoryButton.classList.remove("bouncing");
-      },
-      100
-    );
-  };
-  if ($$props.playerInventory === void 0 && $$bindings.playerInventory && playerInventory !== void 0)
-    $$bindings.playerInventory(playerInventory);
+  async function saveInventory() {
+    await updateDoc(doc(db, "inventory", auth.currentUser.uid), {
+      ressources: Object.assign({}, playerRessources)
+    });
+  }
+  if ($$props.playerRessources === void 0 && $$bindings.playerRessources && playerRessources !== void 0)
+    $$bindings.playerRessources(playerRessources);
   let $$settled;
   let $$rendered;
   do {
     $$settled = true;
     {
-      if (playerInventory && htmlInventoryButton) {
-        if (!init) {
-          init = true;
-        } else {
-          animateInventory();
-        }
+      if (playerRessources && htmlInventoryButton) {
+        saveInventory();
       }
     }
     $$rendered = `<div class="${"absolute right-[calc(50%-1.5rem)] top-5 w-[3rem] h-[3rem z-20"}"${add_attribute("this", htmlInventoryButton, 0)}>${!displayInventory ? `<img src="${"/logo/inventory.png"}" alt="${"inventory logo"}">` : `<img src="${"/logo/inventory_cross.png"}" alt="${"inventory logo"}">`}</div>
 
 ${validate_component(Inventory, "Inventory").$$render(
       $$result,
-      { playerInventory, displayInventory },
+      { playerRessources, displayInventory },
       {
-        playerInventory: ($$value) => {
-          playerInventory = $$value;
+        playerRessources: ($$value) => {
+          playerRessources = $$value;
           $$settled = false;
         },
         displayInventory: ($$value) => {
@@ -97,18 +105,21 @@ ${validate_component(Inventory, "Inventory").$$render(
   return $$rendered;
 });
 const ToolsBar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let { player = {} } = $$props;
-  if ($$props.player === void 0 && $$bindings.player && player !== void 0)
-    $$bindings.player(player);
-  return `<div class="${"flex mt-auto w-full h-[6rem] box-content"}">${each(player.tools, (tool) => {
-    return `<div class="${"flex justify-center items-center m-auto w-[5rem] h-[5rem] rounded-full shadow-xl " + escape(player.currentTool == tool ? "bg-green-300" : "bg-taupe", true)}"><img src="${"/tools/" + escape(tool.toolName, true) + ".png"}"${add_attribute("alt", tool.toolName, 0)} class="${"object-cover w-full h-full"}">
+  let { playerTools = [] } = $$props;
+  let { playerCurrentTool = {} } = $$props;
+  if ($$props.playerTools === void 0 && $$bindings.playerTools && playerTools !== void 0)
+    $$bindings.playerTools(playerTools);
+  if ($$props.playerCurrentTool === void 0 && $$bindings.playerCurrentTool && playerCurrentTool !== void 0)
+    $$bindings.playerCurrentTool(playerCurrentTool);
+  return `<div class="${"flex mt-auto w-full h-[6rem] box-content"}">${each(playerTools, (tool) => {
+    return `<div class="${"flex justify-center items-center m-auto w-[5rem] h-[5rem] rounded-full shadow-xl " + escape(playerCurrentTool == tool ? "bg-green-300" : "bg-taupe", true)}"><img src="${"/tools/" + escape(tool.toolName, true) + ".png"}"${add_attribute("alt", tool.toolName, 0)} class="${"object-cover w-full h-full"}">
 		</div>`;
   })}</div>`;
 });
 const Cube = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { cube = {} } = $$props;
   let { cubeHealth } = $$props;
-  let { htmlCube } = $$props;
+  let { htmlCube = {} } = $$props;
   let { breakCube = () => {
   } } = $$props;
   let breakingAnimation = 0;
@@ -154,9 +165,8 @@ const Ressources = create_ssr_component(($$result, $$props, $$bindings, slots) =
   let cubeHealth;
   let { ressources: ressources2 = [] } = $$props;
   let { player = {} } = $$props;
-  let { playerInventory = {} } = $$props;
   let cube = generateCube(ressources2[0]);
-  let htmlCube;
+  let htmlCube = {};
   function breakCube() {
     if (!player.currentTool)
       return;
@@ -179,18 +189,16 @@ const Ressources = create_ssr_component(($$result, $$props, $$bindings, slots) =
     );
   }
   function addToInventory(ressource) {
-    if (!playerInventory[ressource]) {
-      playerInventory[ressource] = 1;
+    if (!player.inventory.ressources[ressource]) {
+      player.inventory.ressources[ressource] = 1;
     } else {
-      playerInventory[ressource]++;
+      player.inventory.ressources[ressource]++;
     }
   }
   if ($$props.ressources === void 0 && $$bindings.ressources && ressources2 !== void 0)
     $$bindings.ressources(ressources2);
   if ($$props.player === void 0 && $$bindings.player && player !== void 0)
     $$bindings.player(player);
-  if ($$props.playerInventory === void 0 && $$bindings.playerInventory && playerInventory !== void 0)
-    $$bindings.playerInventory(playerInventory);
   let $$settled;
   let $$rendered;
   do {
@@ -233,40 +241,54 @@ const Inputs = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let player;
-  let playerInventory = inventory;
   let $$settled;
   let $$rendered;
   do {
     $$settled = true;
     player = template;
-    $$rendered = `<div class="${"relative main flex flex-col w-full min-h-screen bg-blanc"}">${validate_component(Coins, "Coins").$$render($$result, { coins: player.coins }, {}, {})}
-	${validate_component(InventoryButton, "InventoryButton").$$render(
+    $$rendered = `<div class="${"relative main flex flex-col w-full min-h-screen bg-blanc"}">${player.inventory.ressources ? `${validate_component(InventoryButton, "InventoryButton").$$render(
       $$result,
-      { playerInventory },
       {
-        playerInventory: ($$value) => {
-          playerInventory = $$value;
+        playerRessources: player.inventory.ressources
+      },
+      {
+        playerRessources: ($$value) => {
+          player.inventory.ressources = $$value;
           $$settled = false;
         }
       },
       {}
     )}
-	${validate_component(Ressources, "Ressources").$$render(
+		${validate_component(Ressources, "Ressources").$$render(
       $$result,
-      { ressources, player, playerInventory },
+      { ressources, player },
       {
         player: ($$value) => {
           player = $$value;
+          $$settled = false;
+        }
+      },
+      {}
+    )}
+		${validate_component(ToolsBar, "ToolsBar").$$render(
+      $$result,
+      {
+        playerTools: player.inventory.tools,
+        playerCurrentTool: player.currentTool
+      },
+      {
+        playerTools: ($$value) => {
+          player.inventory.tools = $$value;
           $$settled = false;
         },
-        playerInventory: ($$value) => {
-          playerInventory = $$value;
+        playerCurrentTool: ($$value) => {
+          player.currentTool = $$value;
           $$settled = false;
         }
       },
       {}
     )}
-	${validate_component(ToolsBar, "ToolsBar").$$render(
+		${validate_component(Inputs, "Inputs").$$render(
       $$result,
       { player },
       {
@@ -276,18 +298,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         }
       },
       {}
-    )}
-	${validate_component(Inputs, "Inputs").$$render(
-      $$result,
-      { player },
-      {
-        player: ($$value) => {
-          player = $$value;
-          $$settled = false;
-        }
-      },
-      {}
-    )}</div>`;
+    )}` : ``}</div>`;
   } while (!$$settled);
   return $$rendered;
 });

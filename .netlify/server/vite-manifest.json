@@ -15,10 +15,11 @@
     "src": "src/routes/+layout.svelte",
     "isEntry": true,
     "imports": [
-      "_index.js"
+      "_index.js",
+      "_config.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout-1389b7da.css"
+      "_app/immutable/assets/_layout-f876a0e0.css"
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
@@ -34,14 +35,35 @@
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_index.js"
+      "_index.js",
+      "_config.js"
     ],
     "css": [
       "_app/immutable/assets/_page-8a024c38.css"
     ]
   },
+  "src/routes/connexion/+page.svelte": {
+    "file": "entries/pages/connexion/_page.svelte.js",
+    "src": "src/routes/connexion/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "src/routes/inscription/+page.svelte": {
+    "file": "entries/pages/inscription/_page.svelte.js",
+    "src": "src/routes/inscription/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_config.js"
+    ]
+  },
   "_index.js": {
     "file": "chunks/index.js"
+  },
+  "_config.js": {
+    "file": "chunks/config.js"
   },
   ".svelte-kit/build/hooks.js": {
     "file": "chunks/hooks.js",

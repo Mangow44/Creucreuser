@@ -10,6 +10,7 @@
 	import ToolsBar from '$lib/ToolsBar/index.svelte';
 	import Ressources from '$lib/ressources/Ressources.svelte';
 	import Inputs from '$lib/Inputs/index.svelte';
+	import Menu from '$lib/menu/Menu.svelte';
 
 	$: player = template;
 
@@ -29,6 +30,7 @@
 
 <div class="relative main flex flex-col w-full min-h-screen bg-blanc">
 	{#if player.inventory.ressources}
+		<Menu bind:player />
 		<InventoryButton bind:playerRessources={player.inventory.ressources} />
 		<Ressources bind:player {ressources} />
 		<ToolsBar
