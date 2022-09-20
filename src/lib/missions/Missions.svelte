@@ -24,7 +24,6 @@
 				}
 			});
 		});
-		console.log(playerMissions);
 	};
 
 	const validateMission = (mission) => {
