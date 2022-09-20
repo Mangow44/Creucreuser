@@ -3,6 +3,7 @@
 	import { db } from '$lib/firebase/config';
 	import { doc, setDoc } from 'firebase/firestore';
 	import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+	import { tools } from '$lib/data/tools';
 
 	let email;
 	let password;
@@ -26,7 +27,8 @@
 		createUserWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
 				setDoc(doc(db, 'inventory', userCredential.user.uid), {
-					inventory: {}
+					ressources: {},
+					tools: tools[0]
 				}).then(() => {
 					goto('/');
 				});

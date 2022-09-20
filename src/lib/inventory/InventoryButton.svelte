@@ -1,33 +1,20 @@
 <script>
 	import Inventory from './Inventory.svelte';
+	import { auth } from '$lib/firebase/config';
 	import { db } from '$lib/firebase/config';
-	import { doc, setDoc } from 'firebase/firestore';
-	import { getAuth } from 'firebase/auth';
+	import { doc, updateDoc } from 'firebase/firestore';
 
-	export let playerInventory = {};
+	export let playerRessources = {};
 	let htmlInventoryButton;
 	let displayInventory = false;
-	let init = false;
 
-	$: if (playerInventory && htmlInventoryButton) {
-		if (!init) {
-			init = true;
-		} else {
-			animateInventory();
-			saveInventory();
-		}
-	}
-
-	function animateInventory() {
-		htmlInventoryButton.classList.add('bouncing');
-		setTimeout(() => {
-			htmlInventoryButton.classList.remove('bouncing');
-		}, 100);
+	$: if (playerRessources && htmlInventoryButton) {
+		saveInventory();
 	}
 
 	async function saveInventory() {
-		await setDoc(doc(db, 'inventory', getAuth().currentUser.uid), {
-			inventory: Object.assign({}, playerInventory)
+		await updateDoc(doc(db, 'inventory', auth.currentUser.uid), {
+			ressources: Object.assign({}, playerRessources)
 		});
 	}
 </script>
@@ -46,4 +33,4 @@
 	{/if}
 </div>
 
-<Inventory bind:playerInventory bind:displayInventory />
+<Inventory bind:playerRessources bind:displayInventory />

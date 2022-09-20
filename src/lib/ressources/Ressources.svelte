@@ -3,12 +3,11 @@
 
 	export let ressources = [];
 	export let player = {};
-	export let playerInventory = {};
 
 	// todo 0 = world
 	let cube = generateCube(ressources[0]);
+	let htmlCube = {};
 	$: cubeHealth = cube.health;
-	let htmlCube;
 
 	function generateCube(array) {
 		let index = 0;
@@ -44,10 +43,10 @@
 	}
 
 	function addToInventory(ressource) {
-		if (!playerInventory[ressource]) {
-			playerInventory[ressource] = 1;
+		if (!player.inventory.ressources[ressource]) {
+			player.inventory.ressources[ressource] = 1;
 		} else {
-			playerInventory[ressource]++;
+			player.inventory.ressources[ressource]++;
 		}
 	}
 </script>

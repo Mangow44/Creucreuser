@@ -6,7 +6,7 @@ export const getInventory = async (uid) => {
 	const docSnap = await getDoc(docRef);
 
 	if (docSnap.exists()) {
-		return docSnap.data().inventory;
+		return docSnap.data();
 	} else {
 		return {};
 	}

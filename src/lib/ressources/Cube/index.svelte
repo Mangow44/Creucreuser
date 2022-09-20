@@ -1,7 +1,7 @@
 <script>
 	export let cube = {};
 	export let cubeHealth;
-	export let htmlCube;
+	export let htmlCube = {};
 	export let breakCube = () => {};
 
 	let breakingAnimation = 0;

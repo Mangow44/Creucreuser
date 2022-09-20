@@ -7,16 +7,13 @@
 		window.addEventListener('keypress', (e) => {
 			switch (e.key) {
 				case '&':
-					player.currentTool = player.tools[0];
+					player.currentTool = player.inventory.tools[0];
 					break;
 				case 'é':
-					player.currentTool = player.tools[1];
+					player.currentTool = player.inventory.tools[1];
 					break;
 				case '"':
-					player.currentTool = player.tools[2];
-					break;
-				case "'":
-					player.currentTool = player.tools[3];
+					player.currentTool = player.inventory.tools[2];
 					break;
 			}
 		});

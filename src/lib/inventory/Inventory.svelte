@@ -2,17 +2,22 @@
 	import { rarity } from '$lib/data/rarity';
 	import Item from './Item.svelte';
 
-	export let playerInventory = {};
+	export let playerRessources = {};
 	export let displayInventory = false;
 	let sortedInventory = [];
 
-	$: if (playerInventory) {
+	$: if (playerRessources) {
+		sortInventory();
+	}
+
+	const sortInventory = () => {
+		sortedInventory = [];
 		rarity.forEach((el) => {
-			if (playerInventory[el]) {
-				sortedInventory[el] = playerInventory[el];
+			if (playerRessources[el]) {
+				sortedInventory[el] = playerRessources[el];
 			}
 		});
-	}
+	};
 </script>
 
 <div
