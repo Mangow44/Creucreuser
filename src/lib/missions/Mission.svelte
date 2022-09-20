@@ -23,9 +23,15 @@
 		</p>
 	</div>
 
-	<div class="relative w-[50%] h-[2rem] m-auto border-2 border-dark overflow-hidden bg-blanc">
+	<div
+		class="relative flex justify-center items-center  
+			w-[50%] h-[2rem] m-auto border-2 border-dark overflow-hidden bg-blanc"
+	>
+		<p class="absolute mx-auto z-50 font-bold text-xs">
+			{player.inventory.ressources[mission.required]} / {mission.amount}
+		</p>
 		<div
-			class="absolute w-full h-full bg-green-300 translate-ratio"
+			class="absolute w-full h-full  bg-green-300 translate-ratio"
 			style="--ratio:calc({ratio}% - 100%);"
 		/>
 	</div>

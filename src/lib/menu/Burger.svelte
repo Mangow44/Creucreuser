@@ -8,7 +8,7 @@
 
 <div
 	id="burger"
-	class="fixed top-5 left-3 cursor-pointer"
+	class="absolute top-5 left-3 cursor-pointer"
 	style="height:{height}rem;width:{width}rem;z-index:30;"
 	on:click={() => {
 		onClick();
