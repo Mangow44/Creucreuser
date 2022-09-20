@@ -1,7 +1,8 @@
 <script>
 	export let player;
 	export let mission = {};
-	export let i = 0;
+	export let i = 1;
+	export let onClick = () => {};
 
 	$: ratio = (player.inventory.ressources[mission.required] / mission.amount) * 100;
 	$: if (ratio > 100) ratio = 100;
@@ -11,6 +12,9 @@
 	class="flex w-[90%] h-[6rem] mx-auto my-2 p-[0.5rem]
 			{i == 0 ? 'mt-[5rem]' : 'mt-[1rem]'}
 			{ratio >= 100 ? 'bg-green-400' : 'bg-taupe'}"
+	on:click={() => {
+		onClick();
+	}}
 >
 	<div class="flex flex-col w-auto h-full m-auto">
 		<img
