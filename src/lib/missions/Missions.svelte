@@ -19,11 +19,12 @@
 		playerMissions = [];
 		player.inventory.tools.forEach((tool) => {
 			missions.forEach((mission) => {
-				if (mission.toolFamily == tool.toolFamily && mission.toolLevel > tool.toolLevel) {
+				if (mission.toolFamily == tool.toolFamily && mission.toolLevel == tool.toolLevel + 1) {
 					playerMissions.push(mission);
 				}
 			});
 		});
+		console.log(playerMissions);
 	};
 
 	const validateMission = (mission) => {
