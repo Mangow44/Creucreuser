@@ -3,44 +3,20 @@
 	export let height = 3;
 	export let width = 3;
 
-	let animation = false;
+	let displayMenu = false;
 </script>
 
 <div
-	id="burger"
-	class="absolute top-5 left-3 cursor-pointer"
-	style="height:{height}rem;width:{width}rem;z-index:30;"
+	class="absolute top-5 left-3 cursor-pointer h-[3rem] w-auto"
+	style="z-index:21;"
 	on:click={() => {
 		onClick();
-		animation = !animation;
+		displayMenu = !displayMenu;
 	}}
 >
-	<span class="bar bar-1 {animation ? 'anim-bar-1' : ''}" />
-	<span class="bar bar-2 {animation ? 'anim-bar-2' : ''}" />
+	{#if !displayMenu}
+		<img src="/logo/book.png" alt="book logo" class="h-full w-auto" />
+	{:else}
+		<img src="/logo/book_cross.png" alt="book logo" class="h-full w-auto" />
+	{/if}
 </div>
-
-<style>
-	#burger .bar {
-		display: block;
-		height: 3px;
-		width: 100%;
-		transition: 0.5s ease;
-		background-color: #261c10;
-	}
-
-	#burger .bar-1 {
-		margin-top: 40%;
-	}
-
-	#burger .bar-2 {
-		margin-top: 10%;
-	}
-
-	.anim-bar-1 {
-		transform: translateY(3.9px) rotate(135deg);
-	}
-
-	.anim-bar-2 {
-		transform: translateY(-3.9px) rotate(-135deg);
-	}
-</style>

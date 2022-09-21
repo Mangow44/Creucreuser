@@ -1,9 +1,13 @@
 <script>
 	export let amount = 0;
 	export let name = '';
+	export let i = 1;
 </script>
 
-<div class="flex relative w-full h-[7rem] my-1 object-cover">
+<div
+	class="flex relative w-full h-[7rem] object-cover
+		{i == 0 ? 'mt-[6rem]' : 'mt-1'}"
+>
 	<div>
 		<img src="/ressources/{name}.png" alt={name} class="w-[4rem] h-[4rem] ml-2" />
 		<p

@@ -13,6 +13,6 @@
 	}}
 />
 
-<SliderDown display={displayMenu} zIndex={'20'}>
+<SliderDown display={displayMenu} color={'bg-book'} zIndex={'20'}>
 	<Missions bind:player {displayMenu} />
 </SliderDown>

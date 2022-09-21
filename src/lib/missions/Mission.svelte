@@ -10,7 +10,7 @@
 
 <div
 	class="flex w-[90%] h-[6rem] mx-auto my-2 p-[0.5rem]
-			{i == 0 ? 'mt-[5rem]' : 'mt-[1rem]'}
+			{i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}
 			{ratio >= 100 ? 'bg-green-400' : 'bg-taupe'}"
 	on:click={() => {
 		onClick();

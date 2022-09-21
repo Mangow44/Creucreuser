@@ -21,10 +21,10 @@
 	};
 </script>
 
-<SliderDown display={displayInventory} color="bg-dark-taupe">
-	<div class="mt-auto w-full h-[90%] overflow-auto">
-		{#each Object.entries(sortedInventory) as [name, amount]}
-			<Item {name} {amount} />
+<SliderDown display={displayInventory} color={'bg-inventory'}>
+	<div class="overflow-auto">
+		{#each Object.entries(sortedInventory) as [name, amount], i}
+			<Item {name} {amount} {i} />
 		{/each}
 	</div>
 </SliderDown>

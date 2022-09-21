@@ -22,7 +22,7 @@
 <div
 	bind:this={htmlInventoryButton}
 	class="absolute right-[calc(50%-1.5rem)] top-5 w-[3rem] h-[3rem]"
-	style="z-index: 12;"
+	style="z-index:12;"
 	on:click={() => {
 		displayInventory = !displayInventory;
 	}}

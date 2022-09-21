@@ -6,11 +6,11 @@
 
 <div
 	class="flex mx-auto  w-[90%] h-[4rem] 
-				bg-dark-taupe border-2 border-dark rounded-lg
-				{i == 0 ? 'mt-[5rem]' : 'mt-[1rem]'}"
+				bg-blanc border-2 border-gold rounded-lg shadow-lg
+				{i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}"
 	on:click={() => {
 		onClick();
 	}}
 >
-	<h2 class="m-auto font-bold text-blanc text-2xl">{text}</h2>
+	<h2 class="m-auto font-bold text-dark font-avocadoCake text-2xl">{text}</h2>
 </div>
