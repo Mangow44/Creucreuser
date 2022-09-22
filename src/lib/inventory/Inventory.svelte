@@ -1,6 +1,6 @@
 <script>
 	import { rarity } from '$lib/data/rarity';
-	import SliderDown from '$lib/helpers/SLD.svelte';
+	import SliderDown from '$lib/helpers/SliderDown.svelte';
 	import Item from './Item.svelte';
 
 	export let playerRessources = {};
