@@ -3,7 +3,7 @@
 	import Burger from './Burger.svelte';
 	import Missions from '../missions/Missions.svelte';
 
-	export let player;
+	export let player = {};
 	let displayMenu = false;
 </script>
 

@@ -1,8 +1,8 @@
 <script>
 	export let player;
+	export let onClick = () => {};
 	export let mission = {};
 	export let i = 1;
-	export let onClick = () => {};
 
 	$: ratio = (player.inventory.ressources[mission.required] / mission.amount) * 100;
 	$: if (ratio > 100) ratio = 100;
@@ -35,7 +35,7 @@
 			{player.inventory.ressources[mission.required] || 0} / {mission.amount}
 		</p>
 		<div
-			class="absolute w-full h-full  bg-green-300 translate-ratio"
+			class="absolute w-full h-full bg-green-300 translate-ratio"
 			style="--ratio:calc({ratio || 0}% - 100%);"
 		/>
 	</div>

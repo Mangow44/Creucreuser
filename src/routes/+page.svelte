@@ -5,11 +5,10 @@
 	import { auth } from '$lib/firebase/config';
 	import { template } from '$lib/data/player/player';
 	import { getInventory } from '$lib/data/player/getInventory';
-	import { ressources } from '$lib/data/ressources';
 	import InventoryButton from '$lib/inventory/InventoryButton.svelte';
-	import ToolsBar from '$lib/ToolsBar/index.svelte';
+	import ToolsBar from '$lib/toolsBar/ToolsBar.svelte';
 	import Ressources from '$lib/ressources/Ressources.svelte';
-	import Inputs from '$lib/Inputs/index.svelte';
+	import Inputs from '$lib/inputs/Inputs.svelte';
 	import Menu from '$lib/menu/Menu.svelte';
 
 	$: player = template;
@@ -32,11 +31,14 @@
 	{#if player.inventory.ressources}
 		<Menu bind:player />
 		<InventoryButton bind:playerRessources={player.inventory.ressources} />
-		<Ressources bind:player {ressources} />
+		<Ressources
+			bind:playerRessources={player.inventory.ressources}
+			bind:playerCurrentTool={player.currentTool}
+		/>
 		<ToolsBar
 			bind:playerTools={player.inventory.tools}
 			bind:playerCurrentTool={player.currentTool}
 		/>
-		<Inputs bind:player />
+		<Inputs bind:playerTools={player.inventory.tools} bind:playerCurrentTool={player.currentTool} />
 	{/if}
 </div>

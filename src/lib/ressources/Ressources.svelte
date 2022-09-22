@@ -1,38 +1,43 @@
 <script>
+	import { ressources } from '$lib/data/ressources';
 	import Cube from '$lib/ressources/Cube.svelte';
 
-	export let ressources = [];
-	export let player = {};
+	export let playerRessources = {};
+	export let playerCurrentTool = {};
 
-	// todo 0 = world
+	// todo 0 = world ex: player.position ?
 	let cube = generateCube(ressources[0]);
 	let htmlCube = {};
+
 	$: cubeHealth = cube.health;
 
-	function generateCube(array) {
-		let index = 0;
+	function generateCube(ressources) {
+		let cubeIndex = 0;
 		let rand = Math.floor(Math.random() * 250);
 
-		if (rand <= 120) index = 0;
-		if (rand > 120 && rand <= 215) index = 1;
-		if (rand > 215 && rand <= 245) index = 2;
-		if (rand > 245 && rand <= 249) index = 3;
+		if (rand <= 120) cubeIndex = 0;
+		if (rand > 120 && rand <= 215) cubeIndex = 1;
+		if (rand > 215 && rand <= 245) cubeIndex = 2;
+		if (rand > 245 && rand <= 249) cubeIndex = 3;
 
-		return array[index];
+		return ressources[cubeIndex];
 	}
 
 	function breakCube() {
-		if (!player.currentTool) return;
+		if (!playerCurrentTool) return;
 		if (
-			cube.toolFamily == player.currentTool.toolFamily &&
-			cube.toolLevel <= player.currentTool.toolLevel
-		) {
-			cubeHealth = cubeHealth - player.currentTool.toolDamage;
-			breakingAnimation();
-			if (cubeHealth > 0) return;
-			addToInventory(cube.name);
-			cube = generateCube(ressources[0]);
-		}
+			cube.toolFamily != playerCurrentTool.toolFamily ||
+			cube.toolLevel > playerCurrentTool.toolLevel
+		)
+			return;
+
+		cubeHealth = cubeHealth - playerCurrentTool.toolDamage;
+		breakingAnimation();
+
+		if (cubeHealth > 0) return;
+
+		addToInventory(cube.name);
+		cube = generateCube(ressources[0]);
 	}
 
 	function breakingAnimation() {
@@ -43,10 +48,10 @@
 	}
 
 	function addToInventory(ressource) {
-		if (!player.inventory.ressources[ressource]) {
-			player.inventory.ressources[ressource] = 1;
+		if (!playerRessources[ressource]) {
+			playerRessources[ressource] = 1;
 		} else {
-			player.inventory.ressources[ressource]++;
+			playerRessources[ressource]++;
 		}
 	}
 </script>

@@ -1,19 +1,20 @@
 <script>
 	import { onMount } from 'svelte';
 
-	export let player = {};
+	export let playerCurrentTool = {};
+	export let playerTools = {};
 
 	onMount(() => {
 		window.addEventListener('keypress', (e) => {
 			switch (e.key) {
 				case '&':
-					player.currentTool = player.inventory.tools[0];
+					playerCurrentTool = playerTools[0];
 					break;
 				case 'é':
-					player.currentTool = player.inventory.tools[1];
+					playerCurrentTool = playerTools[1];
 					break;
 				case '"':
-					player.currentTool = player.inventory.tools[2];
+					playerCurrentTool = playerTools[2];
 					break;
 			}
 		});
