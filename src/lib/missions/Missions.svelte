@@ -18,6 +18,7 @@
 	const getPlayerMissions = () => {
 		playerMissions = [];
 		player.inventory.tools.forEach((tool) => {
+			if (!missions[tool.toolLevel - 1]) return;
 			let mission = missions[tool.toolLevel - 1].find((mission) => {
 				if (mission.toolFamily == tool.toolFamily) return mission;
 			});
