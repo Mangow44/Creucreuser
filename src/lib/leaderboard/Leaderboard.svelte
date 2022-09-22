@@ -7,26 +7,35 @@
 
 	export let displayMenu = false;
 	let displayLeaderboard = false;
-	$: data = [];
+	let leaderboardData = [];
 
 	$: if (!displayMenu) displayLeaderboard = false;
-	$: if (data) {
-		data.sort((a, b) => {
+
+	$: if (leaderboardData) {
+		leaderboardData.sort((a, b) => {
 			return b.score - a.score;
 		});
 	}
 
-	getDocs(collection(db, 'inventory')).then((snap) => {
-		snap.forEach((document) => {
-			getDoc(doc(db, 'player', document.id)).then((player) => {
-				let score = 0;
-				document.data().tools.forEach((tool) => {
-					score += tool.toolLevel;
+	$: if (displayLeaderboard == true) updateLeaderboard();
+
+	const updateLeaderboard = () => {
+		leaderboardData = [];
+		getDocs(collection(db, 'inventory')).then((snap) => {
+			snap.forEach((document) => {
+				getDoc(doc(db, 'player', document.id)).then((player) => {
+					let score = 0;
+					document.data().tools.forEach((tool) => {
+						score += tool.toolLevel;
+					});
+					leaderboardData = [
+						...leaderboardData,
+						{ score: (score / 3).toFixed(2), name: player.data().name }
+					];
 				});
-				data = [...data, { score: score / 3, name: player.data().name }];
 			});
 		});
-	});
+	};
 </script>
 
 <MenuComponent
@@ -39,7 +48,7 @@
 <SliderDown display={displayLeaderboard} color={'bg-blanc'}>
 	<Retour bind:display={displayLeaderboard} />
 
-	{#each data as player, i}
+	{#each leaderboardData as player, i}
 		<div class="flex items-center w-full h-8 bg-taupe {i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}">
 			<p class="font-bold mx-2">{i + 1}</p>
 			<p>{player.name}</p>

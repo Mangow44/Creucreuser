@@ -16,6 +16,8 @@
 
 	$: if (!displayMenu) displayMissions = false;
 
+	$: if (displayMissions == true) getPlayerMissions();
+
 	const getPlayerMissions = () => {
 		playerMissions = [];
 		player.inventory.tools.forEach((tool) => {
@@ -47,8 +49,6 @@
 			getPlayerMissions();
 		});
 	};
-
-	getPlayerMissions();
 </script>
 
 <MenuComponent
