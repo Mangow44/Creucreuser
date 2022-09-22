@@ -1,9 +1,9 @@
 <script>
 	import { db } from '$lib/firebase/config';
 	import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-	import MenuComponent from '$lib/helpers/MenuComponent.svelte';
+	import MenuComponent from '$lib/helpers/MC.svelte';
 	import Retour from '$lib/helpers/Retour.svelte';
-	import SliderDown from '$lib/helpers/SliderDown.svelte';
+	import SliderDown from '$lib/helpers/SLD.svelte';
 
 	export let displayMenu = false;
 	let displayLeaderboard = false;

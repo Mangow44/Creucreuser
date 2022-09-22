@@ -3,8 +3,8 @@
 	import { tools } from '$lib/data/tools';
 	import { auth, db } from '$lib/firebase/config';
 	import { doc, updateDoc } from 'firebase/firestore';
-	import MenuComponent from '$lib/helpers/MenuComponent.svelte';
-	import SliderDown from '$lib/helpers/SliderDown.svelte';
+	import MenuComponent from '$lib/helpers/MC.svelte';
+	import SliderDown from '$lib/helpers/SLD.svelte';
 	import Mission from './Mission.svelte';
 	import Retour from '$lib/helpers/Retour.svelte';
 

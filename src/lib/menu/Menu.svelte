@@ -1,5 +1,5 @@
 <script>
-	import SliderDown from '$lib/helpers/SliderDown.svelte';
+	import SliderDown from '$lib/helpers/SLD.svelte';
 	import Burger from './Burger.svelte';
 	import Missions from '../missions/Missions.svelte';
 	import Leaderboard from '$lib/leaderboard/Leaderboard.svelte';
