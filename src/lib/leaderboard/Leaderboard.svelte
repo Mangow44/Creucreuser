@@ -4,6 +4,7 @@
 	import MenuComponent from '$lib/helpers/MenuComponent.svelte';
 	import Retour from '$lib/helpers/Retour.svelte';
 	import SliderDown from '$lib/helpers/SliderDown.svelte';
+	import { getPlayerToolPower } from '$lib/helpers/getPlayerToolPower';
 
 	export let displayMenu = false;
 	let displayLeaderboard = false;
@@ -13,7 +14,7 @@
 
 	$: if (leaderboardData) {
 		leaderboardData.sort((a, b) => {
-			return b.score - a.score;
+			return b.power - a.power;
 		});
 	}
 
@@ -24,14 +25,8 @@
 		getDocs(collection(db, 'inventory')).then((snap) => {
 			snap.forEach((document) => {
 				getDoc(doc(db, 'player', document.id)).then((player) => {
-					let score = 0;
-					document.data().tools.forEach((tool) => {
-						score += tool.toolLevel;
-					});
-					leaderboardData = [
-						...leaderboardData,
-						{ score: (score / 3).toFixed(2), name: player.data().name }
-					];
+					let power = getPlayerToolPower(document.data().tools);
+					leaderboardData = [...leaderboardData, { power: power, name: player.data().name }];
 				});
 			});
 		});
@@ -52,7 +47,7 @@
 		<div class="flex items-center w-full h-8 bg-taupe {i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}">
 			<p class="font-bold mx-2">{i + 1}</p>
 			<p>{player.name}</p>
-			<p class="ml-auto mr-2">score : {player.score}</p>
+			<p class="ml-auto mr-2">Puissance équipement : {player.power}</p>
 		</div>
 	{/each}
 </SliderDown>

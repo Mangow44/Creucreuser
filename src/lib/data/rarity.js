@@ -1,4 +1,4 @@
 export const rarity = [
-'terre', 'pierre', 'fer', 'fossile'
+'terre', 'gravier', 'pierre', 'fer', 'or', 'fossile'
 ]
 

@@ -10,9 +10,13 @@
 	import Ressources from '$lib/ressources/Ressources.svelte';
 	import Inputs from '$lib/inputs/Inputs.svelte';
 	import Menu from '$lib/menu/Menu.svelte';
+	import WorldSelector from '$lib/worldSelector/WorldSelector.svelte';
 
 	$: player = template;
-	// TODO bloquer la taille des écrans avec des min
+	$: world = 0;
+
+	// TODO bloquer la taille des écrans avec des min + nettoyer leaderboard (code + visuel) et missions (code)
+	// nettoyer world selector
 	onMount(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (!user) {
@@ -31,9 +35,11 @@
 	{#if player.inventory.ressources}
 		<Menu bind:player />
 		<InventoryButton bind:playerRessources={player.inventory.ressources} />
+		<WorldSelector bind:playerTools={player.inventory.tools} bind:world />
 		<Ressources
 			bind:playerRessources={player.inventory.ressources}
 			bind:playerCurrentTool={player.currentTool}
+			bind:world
 		/>
 		<ToolsBar
 			bind:playerTools={player.inventory.tools}

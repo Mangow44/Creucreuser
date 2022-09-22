@@ -4,12 +4,16 @@
 
 	export let playerRessources = {};
 	export let playerCurrentTool = {};
+	export let world;
 
-	// todo 0 = world ex: player.position ?
-	let cube = generateCube(ressources[0]);
+	let cube = generateCube(ressources[world]);
 	let htmlCube = {};
 
 	$: cubeHealth = cube.health;
+
+	$: if (world >= 0) {
+		cube = generateCube(ressources[world]);
+	}
 
 	function generateCube(ressources) {
 		let cubeIndex = 0;
@@ -37,7 +41,7 @@
 		if (cubeHealth > 0) return;
 
 		addToInventory(cube.name);
-		cube = generateCube(ressources[0]);
+		cube = generateCube(ressources[world]);
 	}
 
 	function breakingAnimation() {
