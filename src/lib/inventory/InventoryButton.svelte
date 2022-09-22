@@ -20,6 +20,7 @@
 </script>
 
 <div
+	draggable="false"
 	bind:this={htmlInventoryButton}
 	class="absolute right-[calc(50%-1.5rem)] top-5 w-[3rem] h-[3rem]"
 	style="z-index:12;"
@@ -28,9 +29,9 @@
 	}}
 >
 	{#if !displayInventory}
-		<img src="/logo/inventory.png" alt="inventory logo" />
+		<img draggable="false" src="/logo/inventory.png" alt="inventory logo" />
 	{:else}
-		<img src="/logo/inventory_cross.png" alt="inventory logo" />
+		<img draggable="false" src="/logo/inventory_cross.png" alt="inventory logo" />
 	{/if}
 </div>
 

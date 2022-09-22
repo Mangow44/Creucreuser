@@ -3,9 +3,10 @@
 	import { tools } from '$lib/data/tools';
 	import { auth, db } from '$lib/firebase/config';
 	import { doc, updateDoc } from 'firebase/firestore';
-	import MenuComponent from '$lib/helpers/menuComponent.svelte';
-	import SliderDown from '$lib/helpers/sliderDown.svelte';
+	import MenuComponent from '$lib/helpers/MenuComponent.svelte';
+	import SliderDown from '$lib/helpers/SliderDown.svelte';
 	import Mission from './Mission.svelte';
+	import Retour from '$lib/helpers/Retour.svelte';
 
 	export let player = {};
 	export let displayMenu = false;
@@ -59,14 +60,7 @@
 />
 
 <SliderDown display={displayMissions} zIndex={'40'} color={'bg-blanc'}>
-	<div
-		class="fixed right-3 top-8 font-bold text-dark"
-		on:click={() => {
-			displayMissions = false;
-		}}
-	>
-		RETOUR
-	</div>
+	<Retour bind:display={displayMissions} />
 
 	{#each playerMissions as mission, i (mission)}
 		<Mission

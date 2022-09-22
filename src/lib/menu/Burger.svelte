@@ -5,6 +5,7 @@
 </script>
 
 <div
+	draggable="false"
 	class="absolute top-5 left-3 h-[3rem] w-auto"
 	style="z-index:21;"
 	on:click={() => {
@@ -13,8 +14,8 @@
 	}}
 >
 	{#if !displayMenu}
-		<img src="/logo/book.png" alt="book logo" class="h-full w-auto" />
+		<img draggable="false" src="/logo/book.png" alt="book logo" class="h-full w-auto" />
 	{:else}
-		<img src="/logo/book_cross.png" alt="book logo" class="h-full w-auto" />
+		<img draggable="false" src="/logo/book_cross.png" alt="book logo" class="h-full w-auto" />
 	{/if}
 </div>

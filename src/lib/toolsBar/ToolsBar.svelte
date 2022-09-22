@@ -6,6 +6,7 @@
 <div class="flex mt-auto w-full h-[6rem] box-content">
 	{#each playerTools as tool}
 		<div
+			draggable="false"
 			class="flex justify-center items-center m-auto 
 				w-[5rem] h-[5rem]  
 				rounded-full shadow-xl 
@@ -15,6 +16,7 @@
 			}}
 		>
 			<img
+				draggable="false"
 				src="/tools/{tool.toolName}.png"
 				alt={tool.toolName}
 				class="object-cover w-full h-full"

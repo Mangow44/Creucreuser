@@ -12,7 +12,7 @@
 	import Menu from '$lib/menu/Menu.svelte';
 
 	$: player = template;
-
+	// TODO bloquer la taille des écrans avec des min
 	onMount(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (!user) {

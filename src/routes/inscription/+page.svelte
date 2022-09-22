@@ -6,6 +6,7 @@
 	import { tools } from '$lib/data/tools';
 
 	let email;
+	let playerName;
 	let password;
 	let passwordVerification;
 	let errorMessage = '';
@@ -14,13 +15,18 @@
 		'auth/weak-password': 'Le mot de passe doit faire 6 caractères au minimum.',
 		'auth/email-already-in-use': 'Adresse email déjà enregistrée.',
 		'auth/invalid-email': 'Adresse email invalide.',
-		'password-verification': 'Les mots de passe ne correspondent pas.'
+		'password-verification': 'Les mots de passe ne correspondent pas.',
+		'player-name': 'Le pseudonyme doit faire 5 caractères au minimum.'
 	};
 	const auth = getAuth();
 
 	function inscription() {
 		if (password != passwordVerification) {
 			errorMessage = errors['password-verification'];
+			return;
+		}
+		if (playerName.length < 4) {
+			errorMessage = errors['player-name'];
 			return;
 		}
 
@@ -30,7 +36,11 @@
 					ressources: {},
 					tools: tools[0]
 				}).then(() => {
-					goto('/');
+					setDoc(doc(db, 'player', userCredential.user.uid), {
+						name: playerName
+					}).then(() => {
+						goto('/');
+					});
 				});
 			})
 			.catch((error) => {
@@ -58,6 +68,17 @@
 
 	<div class="w-[90%] mx-auto mt-10 shadow-xl">
 		<input
+			placeholder="Pseudonyme"
+			type="text"
+			name="userName"
+			id="name"
+			bind:value={playerName}
+			class="w-full h-12 border-2 border-dark pl-1"
+		/>
+	</div>
+
+	<div class="w-[90%] mx-auto mt-10 shadow-xl">
+		<input
 			placeholder="Mot de passe"
 			type="password"
 			name="userPassword"
@@ -78,7 +99,7 @@
 		/>
 	</div>
 
-	<p class="w-full h-6 text-center text-red-500 font-bold mt-12  overflow-auto">
+	<p class="w-full h-6 text-center text-red-500 font-bold mt-12">
 		{errorMessage}
 	</p>
 
