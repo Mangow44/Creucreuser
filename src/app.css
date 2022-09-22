@@ -7,6 +7,19 @@
 	src: url('/fonts/AvocadoCake.otf');
 }
 
+.fade-in {
+	animation: fade 2s ease forwards;
+}
+
+@keyframes fade {
+	0% {
+		opacity: 0%;
+	}
+	100% {
+		opacity: 100%;
+	}
+}
+
 .bouncing {
 	animation: bounce 0.1s ease;
 }

@@ -68,7 +68,7 @@
 		RETOUR
 	</div>
 
-	{#each playerMissions as mission, i}
+	{#each playerMissions as mission, i (mission)}
 		<Mission
 			bind:player
 			onClick={() => {

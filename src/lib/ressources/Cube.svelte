@@ -18,16 +18,23 @@
 </script>
 
 <div
+	draggable="false"
 	bind:this={htmlCube}
 	class="relative w-full h-[12em] object-cover shadow-2xl"
 	on:click={() => {
 		breakCube();
 	}}
 >
-	<img src="/ressources/{cube.name}.png" alt={cube.name} class="absolute w-full h-full" />
+	<img
+		draggable="false"
+		src="/ressources/{cube.name}.png"
+		alt={cube.name}
+		class="absolute w-full h-full"
+	/>
 
 	{#if breakingAnimation != 0}
 		<img
+			draggable="false"
 			src="/ressources/break{breakingAnimation}.png"
 			alt="breaking animation"
 			class="absolute w-full h-full"
@@ -36,6 +43,7 @@
 </div>
 
 <p
+	draggable="false"
 	class="flex justify-center items-center w-full h-[4rem] font-bold
 	overflow-hidden text-center text-ellipsis whitespace-nowrap"
 >
