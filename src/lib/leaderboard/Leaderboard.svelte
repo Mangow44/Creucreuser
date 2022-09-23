@@ -44,7 +44,7 @@
 	<Retour bind:display={displayLeaderboard} />
 
 	{#each leaderboardData as player, i}
-		<div class="flex items-center w-full h-8 bg-taupe {i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}">
+		<div class="flex items-center w-full h-8 fade-in bg-taupe {i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}">
 			<p class="font-bold mx-2">{i + 1}</p>
 			<p>{player.name}</p>
 			<p class="ml-auto mr-2">Puissance équipement : {player.power}</p>
