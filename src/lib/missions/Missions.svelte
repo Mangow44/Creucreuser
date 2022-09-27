@@ -8,7 +8,7 @@
 	import Mission from './Mission.svelte';
 	import Retour from '$lib/helpers/Retour.svelte';
 
-	export let player = {};
+	export let playerInventory = {};
 	export let displayMenu = false;
 
 	let displayMissions = false;
@@ -20,7 +20,7 @@
 
 	const getPlayerMissions = () => {
 		playerMissions = [];
-		player.inventory.tools.forEach((tool) => {
+		playerInventory.tools.forEach((tool) => {
 			if (!missions[tool.toolLevel - 1]) return;
 			let mission = missions[tool.toolLevel - 1].find((mission) => {
 				if (mission.toolFamily == tool.toolFamily) return mission;
@@ -30,21 +30,21 @@
 	};
 
 	const validateMission = (mission) => {
-		if (player.inventory.ressources[mission.required] < mission.amount) return;
+		if (playerInventory.ressources[mission.required] < mission.amount) return;
 
-		let playerMissionTool = player.inventory.tools.find((tool) => {
+		let playerMissionTool = playerInventory.tools.find((tool) => {
 			if (tool.toolFamily == mission.toolFamily) return tool;
 		});
 		let rewardTool = tools[mission.toolLevel - 1].find((tool) => {
 			if (tool.toolFamily == mission.toolFamily) return tool;
 		});
 
-		player.inventory.tools[player.inventory.tools.indexOf(playerMissionTool)] = rewardTool;
-		player.inventory.ressources[mission.required] -= mission.amount;
+		playerInventory.tools[playerInventory.tools.indexOf(playerMissionTool)] = rewardTool;
+		playerInventory.ressources[mission.required] -= mission.amount;
 
 		updateDoc(doc(db, 'inventory', auth.currentUser.uid), {
-			ressources: Object.assign({}, player.inventory.ressources),
-			tools: player.inventory.tools
+			ressources: Object.assign({}, playerInventory.ressources),
+			tools: playerInventory.tools
 		}).then(() => {
 			getPlayerMissions();
 		});
@@ -64,7 +64,7 @@
 
 	{#each playerMissions as mission, i (mission)}
 		<Mission
-			bind:player
+			bind:playerInventory
 			onClick={() => {
 				validateMission(mission);
 			}}

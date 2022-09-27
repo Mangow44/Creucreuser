@@ -5,14 +5,14 @@ export const tools = [
 		{toolFamily: 'maillet&burin', toolLevel: 1, toolName: 'maillet&burin_en_bois', toolDamage: 1},
 	],
 	[
-		{toolFamily: 'pelle', toolLevel: 2, toolName: 'pelle_en_pierre', toolDamage: 1.5},
-		{toolFamily: 'pioche', toolLevel: 2, toolName: 'pioche_en_pierre', toolDamage: 1.5},
-		{toolFamily: 'maillet&burin', toolLevel: 2, toolName: 'maillet&burin_en_pierre', toolDamage: 1.5},
+		{toolFamily: 'pelle', toolLevel: 2, toolName: 'pelle_en_pierre', toolDamage: 2},
+		{toolFamily: 'pioche', toolLevel: 2, toolName: 'pioche_en_pierre', toolDamage: 2},
+		{toolFamily: 'maillet&burin', toolLevel: 2, toolName: 'maillet&burin_en_pierre', toolDamage: 2},
 	],
 	[
-		{toolFamily: 'pelle', toolLevel: 3, toolName: 'pelle_en_fer', toolDamage: 2},
-		{toolFamily: 'pioche', toolLevel: 3, toolName: 'pioche_en_fer', toolDamage: 2},
-		{toolFamily: 'maillet&burin', toolLevel: 3, toolName: 'maillet&burin_en_fer', toolDamage: 2},
+		{toolFamily: 'pelle', toolLevel: 3, toolName: 'pelle_en_fer', toolDamage: 3},
+		{toolFamily: 'pioche', toolLevel: 3, toolName: 'pioche_en_fer', toolDamage: 3},
+		{toolFamily: 'maillet&burin', toolLevel: 3, toolName: 'maillet&burin_en_fer', toolDamage: 3},
 	],
 	[
 		{toolFamily: 'pelle', toolLevel: 4, toolName: 'pelle_en_or', toolDamage: 4},

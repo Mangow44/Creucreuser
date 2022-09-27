@@ -3,8 +3,10 @@
 	import Burger from './Burger.svelte';
 	import Missions from '../missions/Missions.svelte';
 	import Leaderboard from '$lib/leaderboard/Leaderboard.svelte';
+	import Shop from '$lib/shop/Shop.svelte';
 
-	export let player = {};
+	export let playerInventory = {};
+	export let playerCoins = 0;
 	let displayMenu = false;
 </script>
 
@@ -15,6 +17,7 @@
 />
 
 <SliderDown display={displayMenu} color={'bg-book'} zIndex={'20'}>
-	<Missions bind:player {displayMenu} />
+	<Missions bind:playerInventory {displayMenu} />
+	<Shop bind:playerInventory bind:playerCoins {displayMenu} />
 	<Leaderboard {displayMenu} />
 </SliderDown>

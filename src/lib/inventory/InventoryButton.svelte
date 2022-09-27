@@ -5,6 +5,7 @@
 	import { doc, updateDoc } from 'firebase/firestore';
 
 	export let playerRessources = {};
+	export let playerCoins = 0;
 	let htmlInventoryButton;
 	let displayInventory = false;
 
@@ -23,7 +24,7 @@
 	draggable="false"
 	bind:this={htmlInventoryButton}
 	class="absolute right-[calc(50%-1.5rem)] top-5 w-[3rem] h-[3rem]"
-	style="z-index:12;"
+	style="z-index:13;"
 	on:click={() => {
 		displayInventory = !displayInventory;
 	}}
@@ -35,4 +36,4 @@
 	{/if}
 </div>
 
-<Inventory bind:playerRessources bind:displayInventory />
+<Inventory bind:playerRessources bind:playerCoins bind:displayInventory />

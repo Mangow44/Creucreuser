@@ -34,7 +34,8 @@
 			.then((userCredential) => {
 				setDoc(doc(db, 'inventory', userCredential.user.uid), {
 					ressources: {},
-					tools: tools[0]
+					tools: tools[0],
+					coins: 0
 				}).then(() => {
 					setDoc(doc(db, 'player', userCredential.user.uid), {
 						name: playerName

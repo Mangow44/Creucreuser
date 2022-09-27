@@ -5,7 +5,7 @@
 </script>
 
 <div
-	class="flex relative w-full h-[7rem] object-cover
+	class="flex relative w-full h-[7rem] object-cover shrink-0 fade-in
 		{i == 0 ? 'mt-[6rem]' : 'mt-1'}"
 >
 	<div>
@@ -21,7 +21,7 @@
 	<p
 		class="flex justify-center items-center mx-auto mt-5
 			w-[70%] h-[2rem] rounded-full bg-blanc
-			opacity-80 font-bold text-xs overflow-auto"
+			font-bold text-xs overflow-auto"
 	>
 		{amount}
 	</p>
