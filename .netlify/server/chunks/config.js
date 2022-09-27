@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import "dotenv/config";
 const firebaseConfig = {
-  apiKey: process.env.APIKEY,
+  apiKey: "AIzaSyAeP_aYr6kjVlzaZpVSdddEhQD-QQr3RSU",
   authDomain: "creucreuser.firebaseapp.com",
   projectId: "creucreuser",
   storageBucket: "creucreuser.appspot.com",

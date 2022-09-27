@@ -28,6 +28,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"esbuild": "^0.15.9",
 		"firebase": "^9.10.0"
 	}
 }

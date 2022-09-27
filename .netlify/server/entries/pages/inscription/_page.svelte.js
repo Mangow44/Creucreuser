@@ -4,6 +4,7 @@ import "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let email;
+  let playerName;
   let password;
   let passwordVerification;
   let errorMessage = "";
@@ -13,11 +14,13 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 
 	<div class="${"w-[90%] mx-auto mt-16 shadow-xl"}"><input placeholder="${"Adresse email"}" type="${"email"}" name="${"userEmail"}" id="${"email"}" class="${"w-full h-12 border-2 border-dark pl-1"}"${add_attribute("value", email, 0)}></div>
 
+	<div class="${"w-[90%] mx-auto mt-10 shadow-xl"}"><input placeholder="${"Pseudonyme"}" type="${"text"}" name="${"userName"}" id="${"name"}" class="${"w-full h-12 border-2 border-dark pl-1"}"${add_attribute("value", playerName, 0)}></div>
+
 	<div class="${"w-[90%] mx-auto mt-10 shadow-xl"}"><input placeholder="${"Mot de passe"}" type="${"password"}" name="${"userPassword"}" id="${"password"}" class="${"w-full h-12 border-2 border-dark pl-1"}"${add_attribute("value", password, 0)}></div>
 
 	<div class="${"w-[90%] mx-auto mt-10 shadow-xl"}"><input placeholder="${"V\xE9rification du mot de passe"}" type="${"password"}" name="${"userPasswordVerification"}" id="${"passwordVerification"}" class="${"w-full h-12 border-2 border-dark pl-1"}"${add_attribute("value", passwordVerification, 0)}></div>
 
-	<p class="${"w-full h-6 text-center text-red-500 font-bold mt-12 overflow-auto"}">${escape(errorMessage)}</p>
+	<p class="${"w-full h-6 text-center text-red-500 font-bold mt-12"}">${escape(errorMessage)}</p>
 
 	<button class="${"mx-auto font-bold mt-10 w-[40%] h-12 bg-taupe rounded-lg shadow-lg border-2 border-dark-taupe"}">S&#39;inscrire
 	</button>
