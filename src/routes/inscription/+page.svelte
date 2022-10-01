@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { db } from '$lib/firebase/config';
-	import { doc, setDoc } from 'firebase/firestore';
+	import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 	import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 	import { tools } from '$lib/data/tools';
 
@@ -16,7 +16,8 @@
 		'auth/email-already-in-use': 'Adresse email déjà enregistrée.',
 		'auth/invalid-email': 'Adresse email invalide.',
 		'password-verification': 'Les mots de passe ne correspondent pas.',
-		'player-name': 'Le pseudonyme doit faire 5 caractères au minimum.'
+		'player-name': 'Le pseudonyme doit faire 5 caractères au minimum.',
+		'player-name-exists': 'Le pseudonyme est déjà existant.'
 	};
 	const auth = getAuth();
 
@@ -30,24 +31,37 @@
 			return;
 		}
 
-		createUserWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				setDoc(doc(db, 'inventory', userCredential.user.uid), {
-					ressources: {},
-					pets: [],
-					tools: tools[0],
-					coins: 0
-				}).then(() => {
-					setDoc(doc(db, 'player', userCredential.user.uid), {
-						name: playerName
-					}).then(() => {
-						goto('/');
-					});
-				});
-			})
-			.catch((error) => {
-				if (errors[error.code]) errorMessage = errors[error.code];
+		getDocs(collection(db, 'player')).then((snap) => {
+			let authorize = true;
+
+			snap.forEach((document) => {
+				if (document.data().name == playerName) {
+					errorMessage = errors['player-name-exists'];
+					authorize = false;
+				}
 			});
+
+			if (!authorize) return;
+
+			createUserWithEmailAndPassword(auth, email, password)
+				.then((userCredential) => {
+					setDoc(doc(db, 'inventory', userCredential.user.uid), {
+						ressources: {},
+						pets: [],
+						tools: tools[0],
+						coins: 0
+					}).then(() => {
+						setDoc(doc(db, 'player', userCredential.user.uid), {
+							name: playerName
+						}).then(() => {
+							goto('/');
+						});
+					});
+				})
+				.catch((error) => {
+					if (errors[error.code]) errorMessage = errors[error.code];
+				});
+		});
 	}
 </script>
 
