@@ -3,7 +3,7 @@
 	export let playerCurrentTool = {};
 </script>
 
-<div class="flex mt-auto w-full h-[6rem] box-content">
+<div class="flex w-full h-[6rem] mt-auto box-content">
 	{#each playerTools as tool}
 		<div
 			draggable="false"

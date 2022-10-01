@@ -9,11 +9,11 @@
 </script>
 
 <div
-	class="flex w-[90%] h-[6rem] mx-auto my-2 p-[0.5rem] fade-in
+	class="flex w-full h-[6rem] mx-auto my-2 p-[0.5rem] fade-in
 			{i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}
 			{ratio >= 100 ? 'bg-green-400' : 'bg-taupe'}"
 	on:click={() => {
-		onClick();
+		if (ratio >= 100) onClick();
 	}}
 >
 	<div class="flex flex-col w-auto h-full m-auto">
@@ -28,8 +28,8 @@
 	</div>
 
 	<div
-		class="relative flex justify-center items-center  
-			w-[50%] h-[2rem] m-auto border-2 border-dark overflow-hidden bg-blanc"
+		class="relative flex justify-center items-center w-[50%] h-[2rem] m-auto  
+			border-2 border-dark overflow-hidden bg-blanc"
 	>
 		<p class="absolute mx-auto z-50 font-bold text-xs">
 			{playerInventory.ressources[mission.required] || 0} / {mission.amount}

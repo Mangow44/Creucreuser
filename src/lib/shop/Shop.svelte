@@ -2,7 +2,7 @@
 	import { rarity } from '$lib/data/rarity';
 	import { ressources } from '$lib/data/ressources';
 	import { getPlayerToolPower } from '$lib/helpers/getPlayerToolPower';
-	import MenuComponent from '$lib/helpers/MenuComponent.svelte';
+	import MenuComponent from '$lib/menu/MenuComponent.svelte';
 	import Retour from '$lib/helpers/Retour.svelte';
 	import SliderDown from '$lib/helpers/SliderDown.svelte';
 	import Coins from '$lib/coins/Coins.svelte';
@@ -18,7 +18,9 @@
 
 	$: if (!displayMenu) displayShop = false;
 
-	$: if (playerInventory) {
+	$: if (playerInventory) updateShop();
+
+	function updateShop() {
 		availableRessources = [];
 		let playerToolPower = getPlayerToolPower(playerInventory.tools);
 		ressources.forEach((group) => {
@@ -35,7 +37,7 @@
 		sortShop();
 	}
 
-	const sortShop = () => {
+	function sortShop() {
 		sortedRessources = [];
 		rarity.forEach((el) => {
 			let item = availableRessources.find((ress) => {
@@ -47,7 +49,7 @@
 					availableRessources[availableRessources.indexOf(item)]
 				];
 		});
-	};
+	}
 </script>
 
 <MenuComponent

@@ -6,6 +6,8 @@
 	export let ressource = {};
 	export let displayShop = false;
 
+	//reset max quand le joueur gagne de l'argent && selecteur != none
+
 	let selector = 'none';
 	let quantity = 0;
 	let max = 0;
@@ -15,54 +17,50 @@
 		quantity = 0;
 	}
 
-	const sell = (ressource) => {
-		if (quantity > 0 && quantity <= playerInventory.ressources[ressource.name]) {
-			playerInventory.ressources[ressource.name] -= quantity;
-			playerInventory.coins += ressource.sell * quantity;
+	function sell(ressource) {
+		if (quantity <= 0 || quantity > playerInventory.ressources[ressource.name]) return;
 
-			updateDoc(doc(db, 'inventory', auth.currentUser.uid), {
-				ressources: Object.assign({}, playerInventory.ressources),
-				coins: playerInventory.coins
-			});
+		playerInventory.ressources[ressource.name] -= quantity;
+		playerInventory.coins += ressource.sell * quantity;
 
-			// reset
-			quantity = 0;
-			max = playerInventory.ressources[ressource.name] || 0;
+		updateDoc(doc(db, 'inventory', auth.currentUser.uid), {
+			ressources: Object.assign({}, playerInventory.ressources),
+			coins: playerInventory.coins
+		});
+
+		// reset
+		quantity = 0;
+		max = playerInventory.ressources[ressource.name] || 0;
+	}
+
+	function buy(ressource) {
+		if (quantity <= 0 || playerInventory.coins < ressource.buy * quantity) return;
+
+		if (!playerInventory.ressources[ressource.name]) {
+			playerInventory.ressources[ressource.name] = quantity;
+		} else {
+			playerInventory.ressources[ressource.name] += quantity;
 		}
-	};
+		playerInventory.coins -= ressource.buy * quantity;
 
-	const buy = (ressource) => {
-		if (quantity > 0 && playerInventory.coins >= ressource.buy * quantity) {
-			if (!playerInventory.ressources[ressource.name]) {
-				playerInventory.ressources[ressource.name] = quantity;
-			} else {
-				playerInventory.ressources[ressource.name] += quantity;
-			}
-			playerInventory.coins -= ressource.buy * quantity;
+		updateDoc(doc(db, 'inventory', auth.currentUser.uid), {
+			ressources: Object.assign({}, playerInventory.ressources),
+			coins: playerInventory.coins
+		});
 
-			updateDoc(doc(db, 'inventory', auth.currentUser.uid), {
-				ressources: Object.assign({}, playerInventory.ressources),
-				coins: playerInventory.coins
-			});
-
-			// reset
-			quantity = 0;
-			max = Math.floor(playerInventory.coins / ressource.buy);
-		}
-	};
+		// reset
+		quantity = 0;
+		max = Math.floor(playerInventory.coins / ressource.buy);
+	}
 </script>
 
 <div
-	class="flex w-full h-auto 
-		my-2 p-[0.5rem] shrink-0 
+	class="flex w-full h-auto my-2 p-[0.5rem] shrink-0 
 		bg-creme fade-in overflow-hidden
 		{selector != 'none' ? 'h-[10rem]' : 'h-[6.5rem]'}"
 	style="transition: all 0.3s ease"
 >
-	<div
-		class="flex flex-col w-[4rem] h-[6rem] 
-			mx-auto"
-	>
+	<div class="flex flex-col w-[4rem] h-[6rem] mx-auto">
 		<img
 			class="w-full h-auto object-cover"
 			src="/ressources/{ressource?.name}.png"
@@ -76,10 +74,8 @@
 			{ressource.name.toUpperCase()}
 		</p>
 	</div>
-	<div
-		class="flex flex-col w-[70%] h-auto 
-			m-auto"
-	>
+
+	<div class="flex flex-col w-[70%] h-auto m-auto">
 		<div
 			class="flex w-full h-full 
 				mx-auto mb-[0.5rem] 
@@ -123,17 +119,16 @@
 		</div>
 
 		<input
-			class="w-[50%] h-auto 
-				m-auto mt-[2rem] 
+			class="w-[50%] h-auto m-auto mt-[2rem] 
 				bg-blanc text-center rounded-full outline-none transition-all 
-			{selector != 'none' ? 'opacity-100' : 'opacity-0 hidden'}
-			{(quantity <= 0 ||
+				{selector != 'none' ? 'opacity-100' : 'opacity-0 hidden'}
+				{(quantity <= 0 ||
 				quantity > playerInventory.ressources[ressource.name] ||
 				!playerInventory.ressources[ressource.name]) &&
 			selector == 'sell'
 				? 'text-red-500'
 				: ''}
-			{(quantity <= 0 || playerInventory.coins < ressource.buy * quantity) && selector == 'buy'
+				{(quantity <= 0 || playerInventory.coins < ressource.buy * quantity) && selector == 'buy'
 				? 'text-red-500'
 				: ''}"
 			type="number"
@@ -151,7 +146,6 @@
 			step="1"
 			name="amountRange"
 			id="amountRange"
-			placeholder="Quantité"
 			bind:value={quantity}
 		/>
 

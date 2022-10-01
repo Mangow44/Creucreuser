@@ -4,9 +4,11 @@
 	import { db } from '$lib/firebase/config';
 	import { doc, updateDoc } from 'firebase/firestore';
 
+	export let playerPets = [];
 	export let playerRessources = {};
 	export let playerCoins = 0;
-	let htmlInventoryButton;
+
+	let htmlInventoryButton = {};
 	let displayInventory = false;
 
 	$: if (playerRessources && htmlInventoryButton) {
@@ -36,4 +38,4 @@
 	{/if}
 </div>
 
-<Inventory bind:playerRessources bind:playerCoins bind:displayInventory />
+<Inventory bind:playerPets bind:playerRessources bind:playerCoins bind:displayInventory />

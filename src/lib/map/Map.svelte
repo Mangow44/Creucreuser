@@ -11,6 +11,10 @@
 	let playerWorlds = [];
 
 	$: if (playerTools) {
+		getPlayerWorlds();
+	}
+
+	function getPlayerWorlds() {
 		playerWorlds = [];
 		let playerPower = getPlayerToolPower(playerTools);
 		worlds.forEach((world) => {

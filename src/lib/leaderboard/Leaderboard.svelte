@@ -1,12 +1,12 @@
 <script>
 	import { auth, db } from '$lib/firebase/config';
 	import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-	import MenuComponent from '$lib/helpers/MenuComponent.svelte';
+	import MenuComponent from '$lib/menu/MenuComponent.svelte';
 	import Retour from '$lib/helpers/Retour.svelte';
 	import SliderDown from '$lib/helpers/SliderDown.svelte';
-	import { updateCurrentUser } from 'firebase/auth';
 
 	export let displayMenu = false;
+
 	let displayLeaderboard = false;
 	let leaderboardData = [];
 
@@ -20,7 +20,7 @@
 
 	$: if (displayLeaderboard == true) updateLeaderboard();
 
-	const updateLeaderboard = () => {
+	function updateLeaderboard() {
 		leaderboardData = [];
 		getDocs(collection(db, 'inventory')).then((snap) => {
 			snap.forEach((document) => {
@@ -32,7 +32,7 @@
 				});
 			});
 		});
-	};
+	}
 </script>
 
 <MenuComponent

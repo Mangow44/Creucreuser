@@ -3,7 +3,7 @@
 	import { tools } from '$lib/data/tools';
 	import { auth, db } from '$lib/firebase/config';
 	import { doc, updateDoc } from 'firebase/firestore';
-	import MenuComponent from '$lib/helpers/MenuComponent.svelte';
+	import MenuComponent from '$lib/menu/MenuComponent.svelte';
 	import SliderDown from '$lib/helpers/SliderDown.svelte';
 	import Mission from './Mission.svelte';
 	import Retour from '$lib/helpers/Retour.svelte';
@@ -18,7 +18,7 @@
 
 	$: if (displayMissions == true) getPlayerMissions();
 
-	const getPlayerMissions = () => {
+	function getPlayerMissions() {
 		playerMissions = [];
 		playerInventory.tools.forEach((tool) => {
 			if (!missions[tool.toolLevel - 1]) return;
@@ -27,11 +27,9 @@
 			});
 			playerMissions.push(mission);
 		});
-	};
+	}
 
 	const validateMission = (mission) => {
-		if (playerInventory.ressources[mission.required] < mission.amount) return;
-
 		let playerMissionTool = playerInventory.tools.find((tool) => {
 			if (tool.toolFamily == mission.toolFamily) return tool;
 		});
@@ -59,7 +57,7 @@
 	i={0}
 />
 
-<SliderDown display={displayMissions} zIndex={'40'} color={'bg-blanc'}>
+<SliderDown display={displayMissions} color={'bg-blanc'} zIndex={40}>
 	<Retour bind:display={displayMissions} />
 
 	{#each playerMissions as mission, i (mission)}

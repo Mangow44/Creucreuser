@@ -25,12 +25,12 @@
 </script>
 
 <div class="flex flex-col w-full h-screen bg-blanc">
-	<div class="flex flex-col w-full h-32 mt-10">
+	<div class="flex flex-col w-full h-32 mt-10 shrink-0">
 		<img src="/tools/pioche_en_pierre.png" alt="logo" class="mx-auto w-auto h-24" />
 		<h1 class="mx-auto font-bold text-xl">CREUCREUSER</h1>
 	</div>
 
-	<div class="w-[90%] mx-auto mt-16 shadow-xl">
+	<div class="w-[90%] mx-auto mt-16 shadow-xl shrink-0">
 		<input
 			placeholder="Adresse email"
 			type="email"
@@ -41,7 +41,7 @@
 		/>
 	</div>
 
-	<div class="w-[90%] mx-auto mt-10 shadow-xl">
+	<div class="w-[90%] mx-auto mt-10 shadow-xl shrink-0">
 		<input
 			placeholder="Mot de passe"
 			type="password"
@@ -52,13 +52,13 @@
 		/>
 	</div>
 
-	<p class="w-full h-6 text-center text-red-500 font-bold mt-12  overflow-auto">
+	<p class="w-full h-6 text-center text-red-500 font-bold mt-12 overflow-auto">
 		{errorMessage}
 	</p>
 
 	<button
 		class="mx-auto font-bold mt-10 w-[40%] h-12 
-				bg-taupe rounded-lg shadow-lg
+				bg-taupe rounded-lg shadow-lg shrink-0
 				border-2 border-dark-taupe"
 		on:click={() => {
 			connexion();
@@ -68,7 +68,7 @@
 	</button>
 
 	<button
-		class="underline mt-3"
+		class="underline mt-3 shrink-0"
 		on:click={() => {
 			goto('/inscription');
 		}}

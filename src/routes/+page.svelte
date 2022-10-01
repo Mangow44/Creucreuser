@@ -15,7 +15,6 @@
 	$: player = {};
 	$: world = 0;
 
-	// TODO bloquer la taille des écrans avec des min + nettoyer leaderboard (code + visuel) et missions (code)
 	onMount(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (!user) {
@@ -34,6 +33,7 @@
 	{#if player?.inventory}
 		<Menu bind:playerInventory={player.inventory} bind:playerCoins={player.inventory.coins} />
 		<InventoryButton
+			bind:playerPets={player.inventory.pets}
 			bind:playerRessources={player.inventory.ressources}
 			bind:playerCoins={player.inventory.coins}
 		/>

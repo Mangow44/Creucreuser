@@ -4,7 +4,7 @@
 
 	export let playerRessources = {};
 	export let playerCurrentTool = {};
-	export let world;
+	export let world = 0;
 
 	let cube = generateCube(ressources[world]);
 	let htmlCube = {};

@@ -5,9 +5,9 @@
 </script>
 
 <div
-	class="flex mx-auto  w-[90%] h-[4rem] 
-				bg-blanc border-2 border-gold rounded-lg shadow-lg
-				{i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}"
+	class="flex w-[90%] h-[4rem] mx-auto
+		bg-blanc border-2 border-gold rounded-lg shadow-lg
+		{i == 0 ? 'mt-[6rem]' : 'mt-[1rem]'}"
 	on:click={() => {
 		onClick();
 	}}

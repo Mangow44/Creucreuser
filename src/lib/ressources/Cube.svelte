@@ -1,6 +1,6 @@
 <script>
 	export let cube = {};
-	export let cubeHealth;
+	export let cubeHealth = 0;
 	export let htmlCube = {};
 	export let breakCube = () => {};
 
@@ -44,8 +44,8 @@
 
 <p
 	draggable="false"
-	class="flex justify-center items-center w-full h-[4rem] font-bold
-	overflow-hidden text-center text-ellipsis whitespace-nowrap"
+	class="flex justify-center items-center w-full h-[4rem] 
+		font-bold overflow-hidden text-center text-ellipsis whitespace-nowrap"
 >
 	{cube.name.toUpperCase()}
 </p>

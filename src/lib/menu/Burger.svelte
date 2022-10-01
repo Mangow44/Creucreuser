@@ -6,7 +6,7 @@
 
 <div
 	draggable="false"
-	class="absolute top-5 left-3 h-[3rem] w-auto"
+	class="absolute top-5 left-3 w-auto h-[3rem]"
 	style="z-index:21;"
 	on:click={() => {
 		onClick();

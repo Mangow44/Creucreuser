@@ -1,12 +1,14 @@
 <script>
 	export let display = false;
 	export let color = 'bg-taupe';
-	export let zIndex = '10';
+	export let zIndex = 10;
 </script>
 
 <div
-	class="slider-down fixed flex flex-col w-full h-screen overflow-auto {color} 
-	{display ? 'display' : 'hide'}"
+	class="slider-down fixed flex flex-col w-full h-screen 
+		overflow-y-auto overflow-x-hidden 
+		{color} 
+		{display ? 'display' : 'hide'}"
 	style="z-index:{zIndex};"
 >
 	<slot />
