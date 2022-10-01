@@ -31,16 +31,16 @@
 <SliderDown display={displayInventory} color={'bg-inventory'} zIndex={12}>
 	<Slider2PartsHori bind:selected left={'Familiers'} right={'Ressources'} />
 	<div
-		class="flex w-auto h-screen transition-all 
+		class="flex transition-all 
 			{selected == 'right' ? 'showRight' : 'showLeft'}"
 	>
-		<div class="w-full h-screen shrink-0">
+		<div class="w-full h-screen overflow-auto shrink-0">
 			{#each playerPets as pet, i}
 				<PetItem {pet} {i} />
 			{/each}
 		</div>
 
-		<div class="w-full h-screen shrink-0">
+		<div class="w-full h-screen overflow-auto shrink-0">
 			<Coins bind:playerCoins />
 			{#each Object.entries(sortedInventory) as [name, amount]}
 				<RessourceItem {name} {amount} />

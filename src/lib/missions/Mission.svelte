@@ -1,4 +1,6 @@
 <script>
+	import ProgressBar from '$lib/helpers/ProgressBar.svelte';
+
 	export let playerInventory;
 	export let onClick = () => {};
 	export let mission = {};
@@ -16,7 +18,7 @@
 		if (ratio >= 100) onClick();
 	}}
 >
-	<div class="flex flex-col w-auto h-full m-auto">
+	<div class="flex flex-col m-auto shrink-0 mx-5">
 		<img
 			src="/ressources/{mission.required}.png"
 			alt={mission.required}
@@ -27,20 +29,13 @@
 		</p>
 	</div>
 
-	<div
-		class="relative flex justify-center items-center w-[50%] h-[2rem] m-auto  
-			border-2 border-dark overflow-hidden bg-blanc"
-	>
-		<p class="absolute mx-auto z-50 font-bold text-xs">
-			{playerInventory.ressources[mission.required] || 0} / {mission.amount}
-		</p>
-		<div
-			class="absolute w-full h-full bg-green-300 translate-ratio"
-			style="--ratio:calc({ratio || 0}% - 100%);"
-		/>
-	</div>
+	<ProgressBar
+		bind:left={playerInventory.ressources[mission.required]}
+		bind:right={mission.amount}
+		bind:ratio
+	/>
 
-	<div class="m-auto">
+	<div class="m-auto shrink-0 px-2">
 		<img
 			src="/tools/{mission.reward}.png"
 			alt={mission.reward}

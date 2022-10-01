@@ -1,4 +1,6 @@
 <script>
+	import ProgressBar from '$lib/helpers/ProgressBar.svelte';
+
 	export let displayPets = false;
 	export let playerInventory = {};
 	export let pet = {};
@@ -58,7 +60,7 @@
 		{#each pet.ressources as ressource, i}
 			<div class="flex shrink-0">
 				<div
-					class="flex flex-col shrink-0 
+					class="flex flex-col mr-2 shrink-0 
 						{i == 0 ? '' : 'mt-[1rem]'} "
 				>
 					<img
@@ -69,18 +71,11 @@
 					<p class="mx-auto text-xs font-bold">{ressource.name.toUpperCase()}</p>
 				</div>
 
-				<div
-					class="relative flex justify-center items-center w-[75%] h-[2rem] m-auto 
-						border-2 border-dark overflow-hidden bg-blanc"
-				>
-					<p class="absolute mx-auto z-50 font-bold text-xs">
-						{playerInventory.ressources[ressource.name] || 0} / {ressource.amount}
-					</p>
-					<div
-						class="absolute w-full h-full bg-green-300 translate-ratio"
-						style="--ratio:calc({ressource.ratio || 0}% - 100%);"
-					/>
-				</div>
+				<ProgressBar
+					bind:left={playerInventory.ressources[ressource.name]}
+					bind:right={ressource.amount}
+					bind:ratio={ressource.ratio}
+				/>
 			</div>
 		{/each}
 	</div>
